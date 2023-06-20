@@ -13,7 +13,7 @@ const authenticateToken = require('../middlewares/authMiddleware');
 const usersFile = path.join(__dirname, '..', 'users.json');
 const secretKey = process.env.SECRET_JWT_KEY;
 
-// GET users listing.
+// GET users listing - baseurl/users (GET)
 router.get('/', (req, res) => {
   try {
     let users = [];
@@ -29,7 +29,7 @@ router.get('/', (req, res) => {
   }
 });
 
-// Create a new user
+// Create a new user -  baseurl/users (POST)
 router.post('/', async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -52,7 +52,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Login user
+// Login user -  baseurl/users/login (POST)
+
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
   try {
@@ -77,7 +78,8 @@ router.post('/login', (req, res) => {
   }
 });
 
-// Delete the user
+// Delete the user - baseurl/users/delete/:id (DELETE)
+
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
   try {
@@ -95,7 +97,8 @@ router.delete('/:id', (req, res) => {
   }
 });
 
-// Protected route to get user's details
+// Protected route to get user's details -  baseurl/users/profile (GET)
+
 router.get('/profile', authenticateToken, (req, res) => {
   // The user's details can be accessed from req.user
   const userDetails = req.user;
@@ -103,7 +106,8 @@ router.get('/profile', authenticateToken, (req, res) => {
   res.json(userDetails);
 });
 
-// protected route to update the user's details
+// protected route to update the user's details -  baseurl/users/profile (PATCH)
+
 router.patch('/profile', authenticateToken, (req, res) => {
   const { id } = req.user;
   const { username } = req.body;
@@ -126,7 +130,8 @@ router.patch('/profile', authenticateToken, (req, res) => {
   }
 });
 
-// Update user without authentication
+// Update user without authentication -  baseurl/users/:id (PATCH)
+
 router.patch('/:id', (req, res) => {
   const { id } = req.params;
   const { username, email } = req.body;
@@ -146,7 +151,8 @@ router.patch('/:id', (req, res) => {
   }
 });
 
-// GET user by id
+// GET user by id - baseurl/users/:id (GET)
+
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   const users = JSON.parse(fs.readFileSync(usersFile));

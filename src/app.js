@@ -5,6 +5,9 @@ require('dotenv').config();
 
 app.use(express.json());
 app.use('/', indexRouter);
+
+// this will call user.json(route)
+
 app.use('/users', usersRouter);
 
 const port = process.env.PORT || 3000;

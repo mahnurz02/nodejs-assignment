@@ -4,7 +4,8 @@ const router = express.Router();
 // Import route files
 const usersRouter = require('./users');
 
-// Define routes
+// Define routes for users
+
 router.use('/users', usersRouter);
 
 router.get('/', (req, res) => {
